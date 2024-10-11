@@ -16,12 +16,12 @@ namespace dot_net_assessment.Repository
 
         public async Task<List<Product>> GetAllAsync()
         {
-            return await _dbContext.Products.Include("ManufacturingProcess").ToListAsync();   
+            return await _dbContext.Products.Include(p => p.ManufacturingProcess).ToListAsync();   
         }
 
         public async Task<Product?> GetByIdAsync(Guid id)
         {
-            var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+            var product = await _dbContext.Products.Include(p => p.ManufacturingProcess).FirstOrDefaultAsync(p => p.Id == id);
             return product;
         }
 

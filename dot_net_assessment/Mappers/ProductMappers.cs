@@ -17,6 +17,18 @@ namespace dot_net_assessment.Mappers
             };
         }
 
+        public static UpdatedProductDto ToProductDtoFromUpdateDto(this Product productModel)
+        {
+            return new UpdatedProductDto
+            {
+                Id = productModel.Id,
+                Name = productModel.Name,
+                Dispatched = productModel.Dispatched,
+                Faulty = productModel.Faulty,
+                ManufacturingProcessId = productModel.ManufacturingProcessId
+            };
+        }
+
         public static Product ToProductFromCreateDto(this CreateProductRequestDto productDto) 
         {
             return new Product

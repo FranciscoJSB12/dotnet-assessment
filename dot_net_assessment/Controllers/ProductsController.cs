@@ -12,10 +12,13 @@ namespace dot_net_assessment.Controllers
     {
 
         private readonly IProductRepository _productRepository;
+        private readonly IManufacturingProcessRepository _manufacturingProcessRepository;
 
-        public ProductsController(IProductRepository productRepository)
+        public ProductsController(IProductRepository productRepository, 
+            IManufacturingProcessRepository manufacturingProcessRepository)
         {
             _productRepository = productRepository;
+            _manufacturingProcessRepository = manufacturingProcessRepository;
         }
 
         [HttpGet]
@@ -39,17 +42,27 @@ namespace dot_net_assessment.Controllers
                 return NotFound();
             }
             
-            return Ok(product);
+            return Ok(product.ToProductDto());
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateOne([FromBody] CreateProductRequestDto createProductRequesDto)
         {
             var productModel = createProductRequesDto.ToProductFromCreateDto();
+            
+            var manufactoringProcess = await _manufacturingProcessRepository.GetByIdAsync(productModel.ManufacturingProcessId);
+
+            if (manufactoringProcess == null)
+            {
+                return NotFound("Wrong type of manufactoring process");
+            }
 
             var product = await _productRepository.CreateOneAsync(productModel);
 
-            return CreatedAtAction(nameof(GetOneById), new { id = productModel.Id }, productModel);
+
+            productModel.ManufacturingProcess = manufactoringProcess;
+
+            return CreatedAtAction(nameof(GetOneById), new { id = productModel.Id }, productModel.ToProductDto());
         }
 
         [HttpPut]
@@ -57,15 +70,22 @@ namespace dot_net_assessment.Controllers
         public async Task<IActionResult> UpdateOne([FromBody] UpdateProductRequestDto updateProductRequestDto, 
             [FromRoute] Guid id)
         {
-            var productModel = await _productRepository.UpdateOneAsync(updateProductRequestDto.ToProductFromUpdateDto(), 
-                id);
+            var manufactoringProcess = await _manufacturingProcessRepository.GetByIdAsync(updateProductRequestDto.ManufacturingProcessId);
 
-            if (productModel == null)
+            if (manufactoringProcess == null)
             {
-                return NotFound();
+                return NotFound("Wrong type of manufactoring process");
             }
 
-            return Ok(productModel);
+            var updatedProduct = await _productRepository.UpdateOneAsync(updateProductRequestDto.ToProductFromUpdateDto(), 
+                id);
+
+            if (updatedProduct == null)
+            {
+                return NotFound("Product not found");
+            }
+
+            return Ok(updatedProduct.ToProductDtoFromUpdateDto());
         }
 
         [HttpDelete]
@@ -79,7 +99,7 @@ namespace dot_net_assessment.Controllers
                 return NotFound();
             }
 
-            return Ok(productModel);
+            return NoContent();
         }
     }
 }
