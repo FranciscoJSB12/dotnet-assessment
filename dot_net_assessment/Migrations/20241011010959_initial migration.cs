@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace dot_net_assessment.Migrations
 {
     /// <inheritdoc />
@@ -31,23 +33,32 @@ namespace dot_net_assessment.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Faulty = table.Column<bool>(type: "bit", nullable: false),
                     Dispatched = table.Column<bool>(type: "bit", nullable: false),
-                    ManufacturingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ManufacturingProcessId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_ManufacturingProcesses_ManufacturingId",
-                        column: x => x.ManufacturingId,
+                        name: "FK_Products_ManufacturingProcesses_ManufacturingProcessId",
+                        column: x => x.ManufacturingProcessId,
                         principalTable: "ManufacturingProcesses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "ManufacturingProcesses",
+                columns: new[] { "Id", "Type" },
+                values: new object[,]
+                {
+                    { new Guid("a8fe47fd-0b62-49ae-a229-2790ff04c4d9"), "Elaborado a mano" },
+                    { new Guid("d321ce3e-cd2f-4ce0-b8bd-16c28d06e13a"), "Elaborado a mano y a máquina" }
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Products_ManufacturingId",
+                name: "IX_Products_ManufacturingProcessId",
                 table: "Products",
-                column: "ManufacturingId");
+                column: "ManufacturingProcessId");
         }
 
         /// <inheritdoc />

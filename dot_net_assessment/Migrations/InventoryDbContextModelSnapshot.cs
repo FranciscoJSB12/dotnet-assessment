@@ -35,6 +35,18 @@ namespace dot_net_assessment.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ManufacturingProcesses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a8fe47fd-0b62-49ae-a229-2790ff04c4d9"),
+                            Type = "Elaborado a mano"
+                        },
+                        new
+                        {
+                            Id = new Guid("d321ce3e-cd2f-4ce0-b8bd-16c28d06e13a"),
+                            Type = "Elaborado a mano y a máquina"
+                        });
                 });
 
             modelBuilder.Entity("dot_net_assessment.Models.Product", b =>
@@ -49,7 +61,7 @@ namespace dot_net_assessment.Migrations
                     b.Property<bool>("Faulty")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ManufacturingId")
+                    b.Property<Guid>("ManufacturingProcessId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -58,20 +70,20 @@ namespace dot_net_assessment.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ManufacturingId");
+                    b.HasIndex("ManufacturingProcessId");
 
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("dot_net_assessment.Models.Product", b =>
                 {
-                    b.HasOne("dot_net_assessment.Models.ManufacturingProcess", "Manufacturing")
+                    b.HasOne("dot_net_assessment.Models.ManufacturingProcess", "ManufacturingProcess")
                         .WithMany()
-                        .HasForeignKey("ManufacturingId")
+                        .HasForeignKey("ManufacturingProcessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Manufacturing");
+                    b.Navigation("ManufacturingProcess");
                 });
 #pragma warning restore 612, 618
         }
