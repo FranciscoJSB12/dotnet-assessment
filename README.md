@@ -1,7 +1,7 @@
 # Prueba Técnica para desarrollador .NET
 
 La solución de la prueba técnica consiste en un servidor REST monolítico desaclopado del frontend y
-elaborado con **.NET** y **C#** usando el SDK **.NET 8** en conjunto con **Entity Framework**
+elaborado con **.NET** y **C#** usando el Framework **.NET 8** con **Entity Framework** y **ASP.NET Core Web API**
 y una base de datos relacional **Microsoft SQL Server**. Por otra parte, la API
 cuenta con autenticación basada **JWT**, es decir, **JSON Web Tokens** donde
 cada enpoint se encuentra protegido, por lo que deberá registrar un usuario
@@ -42,10 +42,10 @@ GO
 Insert into [DotNetAssessmentDB].[dbo].[Products] ([Id], [Name], [Faulty], [Dispatched], [ManufacturingProcessId]) VALUES (N'437BBD6E-328E-44E5-AD90-08DCEA59831B', 'Zapatos YouCanFly', 1, 1, N'A8FE47FD-0B62-49AE-A229-2790FF04C4D9');
 ```
 
-6. Una vez realidos estos pasos, puede iniciar el proyecto desde visual studio usando el botón de start con http.
+6. En base a lo anterior, puede iniciar el proyecto desde visual studio usando http.
 
 7. Esto levantará la documentación automática de **Swagger**, donde podrá visualizar todos los enpoints, recuerde
-   registrarse y tomar token que se le suministra en la response y presionar el botón de autorización en **Swagger**
+   registrarse y tomar token que se le suministra en la respuesta y presionar el botón de autorización en **Swagger**
    para suministrar el token al mismo, de esta formá tendrá acceso al resto de recursos.
 
 8. Es importante aclarar que los enpoints están documentados con **Swagger**, así mismo se creó una tabla adicional
