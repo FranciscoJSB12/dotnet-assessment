@@ -14,11 +14,21 @@ que los enpoints se encuentran protegidos bajo autenticación al momento de hace
 los mismos. Se recomienda entonces, referirse a la documentación generada por **Swagger** al
 momento de levantar el proyecto.
 
-## Guía para levantar el proyecto
+## Guía de instalación y despliegue
 
-1. Clone el repositorio con `git clone`
+1. Se recomienda clonar el proyecto directamente desde Visual Studio usando la url de repositorio, de esta forma se prepará de forma casi automática.
+2. Instalar las dependencias en caso de que las mismas no sean instaladas automáticamente por Visual Studio, puede usar `nuget restore` desde su terminal.
+3. Configure la URL para el servidor de SQL Server en el archivo **appsetting.json**, puede usar la siguiente cambiando el
+   nombre del servidor al que está instalado en su equipo local:
+   `server=NOMBRE-SERVIDOR\\SQLEXPRESS;Database=DotNetAssessmentDB;Trusted_connection=true;TrustServerCertificate=true`
+   Mantenga el campo Database y los restantes iguales, solo modifique el servidor, copie y pegue la url en el archivo appsettings.json.
+4. En Visual Studio, abra una ventana del **package manager console** o consola para manejar de paquetes de Nuget, luego ejecute
+   los dos siguientes comandos en el orden que se muestran para crear las tablas:
 
-## Script para realizar seed de la base de datos
+- `add-migration "restore all tables"`
+- `update-database`
+
+5. Una vez creadas las tablas, puede ejecutar el siguiente **script SQL** para hacer un seed de la base de datos
 
 ```
 USE [DotNetAssessmentDB]
@@ -31,6 +41,17 @@ Insert into [DotNetAssessmentDB].[dbo].[Products] ([Id], [Name], [Faulty], [Disp
 GO
 Insert into [DotNetAssessmentDB].[dbo].[Products] ([Id], [Name], [Faulty], [Dispatched], [ManufacturingProcessId]) VALUES (N'437BBD6E-328E-44E5-AD90-08DCEA59831B', 'Zapatos YouCanFly', 1, 1, N'A8FE47FD-0B62-49AE-A229-2790FF04C4D9');
 ```
+
+6. Una vez realidos estos pasos, puede iniciar el proyecto desde visual studio usando el botón de start con http.
+
+7. Esto levantará la documentación automática de **Swagger**, donde podrá visualizar todos los enpoints, recuerde
+   registrarse y tomar token que se le suministra en la response y presionar el botón de autorización en **Swagger**
+   para suministrar el token al mismo, de esta formá tendrá acceso al resto de recursos.
+
+8. Es importante aclarar que los enpoints están documentados con **Swagger**, así mismo se creó una tabla adicional
+   para los valores que corresponden al tipo de fabricación de un producto, por ello observará dos enpoints dedicados
+   a obtener los id de los mismo, de este modo cuando cree un nuevo producto, suministre el ID que corresponde y no el
+   nombre del método de fabricación.
 
 ## Formato JSON de ejemplo para realizar inserción masiva de productos en la base de datos mediante el enpoint creado
 
