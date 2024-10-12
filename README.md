@@ -46,12 +46,13 @@ Insert into [DotNetAssessmentDB].[dbo].[Products] ([Id], [Name], [Faulty], [Disp
 
 7. Esto levantará la documentación automática de **Swagger**, donde podrá visualizar todos los enpoints, recuerde
    registrarse y tomar token que se le suministra en la respuesta y presionar el botón de autorización en **Swagger**
-   para suministrar el token al mismo, de esta formá tendrá acceso al resto de recursos.
+   para suministrar el token al mismo, de esta forma tendrá acceso al resto de recursos.
 
 8. Es importante aclarar que los enpoints están documentados con **Swagger**, así mismo se creó una tabla adicional
    para los valores que corresponden al tipo de fabricación de un producto, por ello observará dos enpoints dedicados
-   a obtener los id de los mismo, de este modo cuando cree un nuevo producto, suministre el ID que corresponde y no el
-   nombre del método de fabricación.
+   a obtener los ids de los mismos, de este modo cuando cree un nuevo producto, suministre el ID que corresponde y no el
+   nombre del método de fabricación, internamente se sabrá si es fabricado a mano o frabricado a mano con máquina y el usuario
+   será capaz de ver el texto en lugar del ID.
 
 ## Formato JSON de ejemplo para realizar inserción masiva de productos en la base de datos mediante el enpoint creado
 
