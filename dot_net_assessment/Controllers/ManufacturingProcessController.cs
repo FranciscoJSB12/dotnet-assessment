@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using dot_net_assessment.Interfaces;
-using dot_net_assessment.Repository;
 using dot_net_assessment.Mappers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dot_net_assessment.Controllers
 {
     [Route("api/manufacturing-processes")]
     [ApiController]
+    [Authorize]
     public class ManufacturingProcessController : ControllerBase
     {
         private readonly IManufacturingProcessRepository _manufacturingProcessRepository;

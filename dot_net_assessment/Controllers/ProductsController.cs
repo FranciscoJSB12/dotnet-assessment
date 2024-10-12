@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using dot_net_assessment.Interfaces;
 using dot_net_assessment.Dtos.Product;
 using dot_net_assessment.Mappers;
 using dot_net_assessment.CustomActionFilters;
 using dot_net_assessment.Helpers;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dot_net_assessment.Controllers
 {
     [Route("api/products")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
 
@@ -60,7 +60,7 @@ namespace dot_net_assessment.Controllers
 
             if (manufactoringProcess == null)
             {
-                return NotFound("Wrong type of manufactoring process");
+                return NotFound("Wrong Id for manufacturing process");
             }
 
             var product = await _productRepository.CreateOneAsync(productModel);
@@ -104,7 +104,7 @@ namespace dot_net_assessment.Controllers
 
             if (manufactoringProcess == null)
             {
-                return NotFound("Invalid Id for manufactoring process");
+                return NotFound("Invalid Id for manufacturing process");
             }
 
             var updatedProduct = await _productRepository.UpdateOneAsync(updateProductRequestDto.ToProductFromUpdateDto(), 

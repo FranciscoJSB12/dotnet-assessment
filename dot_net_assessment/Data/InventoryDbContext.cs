@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using dot_net_assessment.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace dot_net_assessment.Data
 {
-    public class InventoryDbContext: DbContext
+    public class InventoryDbContext: IdentityDbContext<AppUser>
     {
         public InventoryDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
@@ -33,6 +35,21 @@ namespace dot_net_assessment.Data
             };
 
             modelBuilder.Entity<ManufacturingProcess>().HasData(manufacturingProcesses);
+
+            List<IdentityRole> roles = new List<IdentityRole>
+            {
+                new IdentityRole
+                {
+                    Name = "Admin",
+                    NormalizedName = "ADMIN"
+                },
+                new IdentityRole
+                {
+                    Name = "User",
+                    NormalizedName = "USER"
+                },
+            };
+            modelBuilder.Entity<IdentityRole>().HasData(roles);
         }
     }
 }
