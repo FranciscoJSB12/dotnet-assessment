@@ -2,6 +2,7 @@
 using dot_net_assessment.Models;
 using dot_net_assessment.Data;
 using dot_net_assessment.Interfaces;
+using dot_net_assessment.Helpers;
 
 namespace dot_net_assessment.Repository
 {
@@ -14,9 +15,37 @@ namespace dot_net_assessment.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<List<Product>> GetAllAsync()
+        public async Task<List<Product>> GetAllAsync(
+            QueryObject query
+            )
         {
-            return await _dbContext.Products.Include(p => p.ManufacturingProcess).ToListAsync();   
+            var products = _dbContext.Products.Include(p => p.ManufacturingProcess).AsQueryable();
+
+
+            if (query.Dispatched == false)
+            {
+                products = products.Where(p => p.Dispatched == false);
+            }
+
+            if (query.Dispatched == true)
+            {
+                products = products.Where(p => p.Dispatched == true);
+            }
+
+            if (query.Faulty == true)
+            {
+                products = products.Where(p => p.Faulty == true);
+            }
+
+            if (query.Faulty == false)
+            {
+                products = products.Where(p => p.Faulty == false);
+            }
+
+            var skipResults = (query.PageNumber - 1) * query.PageSize;
+
+            return await products.Skip(skipResults).Take(query.PageSize).ToListAsync();
+               
         }
 
         public async Task<Product?> GetByIdAsync(Guid id)
@@ -36,9 +65,7 @@ namespace dot_net_assessment.Repository
         {
 
             await _dbContext.Products.AddRangeAsync(newProducts);
-
             await _dbContext.SaveChangesAsync();
-
             return newProducts;
         }
 

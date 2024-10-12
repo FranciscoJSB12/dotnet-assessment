@@ -1,10 +1,12 @@
-﻿using dot_net_assessment.Models;
+﻿using dot_net_assessment.Helpers;
+using dot_net_assessment.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace dot_net_assessment.Interfaces
 {
     public interface IProductRepository
     {
-        Task<List<Product>> GetAllAsync();
+        Task<List<Product>> GetAllAsync(QueryObject query);
 
         Task<Product?> GetByIdAsync(Guid id);
 

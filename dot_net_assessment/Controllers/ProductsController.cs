@@ -4,6 +4,8 @@ using dot_net_assessment.Interfaces;
 using dot_net_assessment.Dtos.Product;
 using dot_net_assessment.Mappers;
 using dot_net_assessment.CustomActionFilters;
+using dot_net_assessment.Helpers;
+using Microsoft.IdentityModel.Tokens;
 
 namespace dot_net_assessment.Controllers
 {
@@ -23,9 +25,11 @@ namespace dot_net_assessment.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(
+            [FromQuery] QueryObject query
+           )
         {
-            var productsModel = await _productRepository.GetAllAsync();
+            var productsModel = await _productRepository.GetAllAsync(query);
 
             var products = productsModel.Select(p => p.ToProductDto());
 
