@@ -14,6 +14,10 @@ que los enpoints se encuentran protegidos bajo autenticación al momento de hace
 los mismos. Se recomienda entonces, referirse a la documentación generada por **Swagger** al
 momento de levantar el proyecto.
 
+## Guía para levantar el proyecto
+
+1. Clone el repositorio con `git clone`
+
 ## Script para realizar seed de la base de datos
 
 ```
@@ -28,7 +32,7 @@ GO
 Insert into [DotNetAssessmentDB].[dbo].[Products] ([Id], [Name], [Faulty], [Dispatched], [ManufacturingProcessId]) VALUES (N'437BBD6E-328E-44E5-AD90-08DCEA59831B', 'Zapatos YouCanFly', 1, 1, N'A8FE47FD-0B62-49AE-A229-2790FF04C4D9');
 ```
 
-## Formato JSON de ejemplo para realizar inserción masiva de productos en la base de datos
+## Formato JSON de ejemplo para realizar inserción masiva de productos en la base de datos mediante el enpoint creado
 
 ```.json
 {
