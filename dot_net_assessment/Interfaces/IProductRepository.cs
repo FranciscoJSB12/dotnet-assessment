@@ -10,6 +10,8 @@ namespace dot_net_assessment.Interfaces
 
         Task<Product> CreateOneAsync(Product productModel);
 
+        Task<List<Product>> CreateManyAsync(List<Product> newProducts);
+
         Task<Product?> UpdateOneAsync(Product productModel, Guid id);
 
         Task<Product?> DeleteOneAsync(Guid id);

@@ -32,6 +32,16 @@ namespace dot_net_assessment.Repository
             return productModel;
         }
 
+        public async Task<List<Product>> CreateManyAsync(List<Product> newProducts)
+        {
+
+            await _dbContext.Products.AddRangeAsync(newProducts);
+
+            await _dbContext.SaveChangesAsync();
+
+            return newProducts;
+        }
+
         public async Task<Product?> UpdateOneAsync(Product productModel, Guid id)
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
